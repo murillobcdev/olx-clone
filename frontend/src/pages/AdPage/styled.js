@@ -42,7 +42,7 @@ margin-top:20px;
       height:320px;
     }
   }
-  .adInfo{
+  .infoAd{
     flex:1;
     margin-right:20px;
 

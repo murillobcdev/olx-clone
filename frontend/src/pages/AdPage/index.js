@@ -56,21 +56,17 @@ const Page = () => {
                                 </Slide>
                             }
                         </div>
+                        <div className="infoAd">
                             <div className="adName">
-
                                 {loading && <Fake height={20} />}
-
                                 {adInfo.title &&
                                     <h2>{adInfo.title}</h2>
                                 }
-
                                 {adInfo.dateCreated &&
                                     <small>Criado em {formatDate(adInfo.dateCreated)}</small>
                                 }
-
                             </div>
                             <div className="adDesc">
-
                                 {loading && <Fake height={100} />}
                                 {adInfo.description}
                                 <hr />
@@ -78,7 +74,7 @@ const Page = () => {
                                     <small>Visualizações: {adInfo.views}</small>
                                 }
                             </div>
-                        
+                        </div>
                     </div>
                 </div>
                 <div className="rightSide">
