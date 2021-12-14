@@ -81,7 +81,6 @@ padding:20px 0;
         }
     }
 }
-
 `;
 export const PageArea = styled.div`
 h2{
@@ -90,6 +89,7 @@ h2{
 .list{
     display:flex;
     flex-wrap:wrap;
+
     .aditem{
         width:25%;
         text-align:center;
@@ -101,5 +101,4 @@ h2{
     font-weight:bold;
     display:inline-block;
 }
-
 `;

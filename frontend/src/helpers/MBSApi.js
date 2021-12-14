@@ -11,7 +11,6 @@ const apiFetchPost = async (endpoint, body) => {
             body.token = token;
         }
     }
-
     const res = await fetch(BASEAPI + endpoint, {
         method: 'POST',
         headers: {
@@ -20,14 +19,12 @@ const apiFetchPost = async (endpoint, body) => {
         },
         body: JSON.stringify(body)
     });
-
     const json = await res.json();
     if (json.notallowed) {
         window.location.href = '/signin';
         return;
     }
     return json;
-
 }
 
 const apiFetchGet = async (endpoint, body = []) => {
@@ -50,18 +47,20 @@ const apiFetchGet = async (endpoint, body = []) => {
 
 }
 
-const apiFetchFile = async (endpoint, body) => {
-
+const apiFetchPut = async (endpoint, body) => {
     if (!body.token) {
         let token = Cookies.get('token');
         if (token) {
-            body.append('token', token);
+            body.token = token;
         }
     }
-
     const res = await fetch(BASEAPI + endpoint, {
-        method: 'POST',
-        body
+        method: 'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
     });
 
     const json = await res.json();
@@ -70,9 +69,30 @@ const apiFetchFile = async (endpoint, body) => {
         window.location.href = '/signin';
         return;
     }
-
     return json;
 }
+
+const apiFetchFile = async (endpoint, body) => {
+
+    if (!body.token) {
+        let token = Cookies.get('token');
+        if (token) {
+            body.append('token', token);
+        }
+    }
+    const res = await fetch(BASEAPI + endpoint, {
+        method: 'POST',
+        body
+    });
+    const json = await res.json();
+
+    if (json.notallowed) {
+        window.location.href = '/signin';
+        return;
+    }
+    return json;
+}
+
 
 
 const MBSApi = {
@@ -122,6 +142,33 @@ const MBSApi = {
             fData
         )
         return json;
+    },
+    getUser: async () => {
+        const response = await apiFetchGet(
+            '/user/me'
+        );
+        return response;
+    },
+    editUser: async (token, name, email, state, password) => {
+        const json = await apiFetchPut(
+            '/user/me',
+            { token, name, email, password, state }
+        )
+        return json;
+    },
+    updateAdd: async (fData, itemId) => {
+        const json = await apiFetchFile(
+            `/ad/${itemId}`,
+            fData
+        )
+        return json;
+    },
+    updateUser: async (name, email, state, password) => {
+        const response = await apiFetchPut(
+            '/user/me',
+            { name, email, state, password }
+        );
+        return response;
     }
 
 }

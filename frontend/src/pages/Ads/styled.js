@@ -37,7 +37,7 @@ margin-top:20px;
         cursor:pointer;
 
 
-        img{
+        img, .img{
             width:25px;
             height:25px;
             margin-right:5px;
@@ -58,12 +58,40 @@ margin-top:20px;
         margin-top:0;
         font-size:18px;
     }
+    .listWarning {
+        padding:30px;
+        text-align:center;
+    }
     .list{
         flex-wrap:wrap;
         display:flex;
     }
     .aditem{
         width:33%;
+    }
+    .pagination{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        flex-wrap:wrap;
+
+        .pageItem{
+            width:30px;
+            height:30px;
+            border:1px solid #670696;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:15px;
+            margin-right:5px;
+            margin-bottom:10px;
+            border-radius:3px;
+            cursor:pointer;
+        }
+        .pageItem:hover, .pageItem.active{
+            background-color:#670696;
+            color:#FFF;
+        }
     }
 }
 `;

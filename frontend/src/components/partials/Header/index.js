@@ -27,7 +27,7 @@ const Header = () => {
                         {logged &&
                             <>
                                 <li>
-                                    <Link to="/my-account" className="">
+                                    <Link to="/user/me" className="">
                                         Minha Conta
                                     </Link>
                                 </li>

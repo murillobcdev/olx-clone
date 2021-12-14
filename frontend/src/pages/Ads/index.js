@@ -12,7 +12,7 @@ const Page = () => {
 
     const api = useApi();
     const history = useHistory();
-    
+
 
     const useQueryString = () => {
         return new URLSearchParams(useLocation().search);
@@ -33,24 +33,48 @@ const Page = () => {
     );
 
     const [stateList, setStateList] = useState([]);
-
     const [categories, setCategories] = useState([]);
-
     const [adList, setAdList] = useState([]);
-
-    const [stateLocal, setStateLocal] = useState();
-
+    const [adsTotal, setAdsTotal] = useState(0);
+    const [pageCount, setPageCount] = useState(0);
     const [resultOpacity, setResultOpacity] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [warningMessage, setWarningMessage] = useState('Carregando..');
+    const [loading, setLoading] = useState(true);
 
     const getAdsList = async () => {
+        setLoading(true);
+
+        let offset = (currentPage - 1) * 9;
+
         const json = await api.getAds({
             sort: 'desc',
             limit: 9,
-            q, cat, estado
+            q, cat, estado,
+            offset
         });
+        
         setAdList(json.ads);
+        setAdsTotal(json.total);
         setResultOpacity(1);
+        setLoading(false);
     }
+
+    useEffect(() => {
+        setResultOpacity(0.3);
+        getAdsList();
+    }, [currentPage]);
+
+    useEffect(() => {
+        if (adList.length > 0) {
+            setPageCount(
+                Math.ceil(adsTotal / adList.length)
+            );
+        } else {
+            setPageCount(0);
+        }
+
+    }, [adsTotal]);
 
     useEffect(() => {
         const getStates = async () => {
@@ -84,14 +108,19 @@ const Page = () => {
             search: `?${queryString.join('&')}`
         });
 
-        if(timer){
+        if (timer) {
             clearTimeout(timer);
         }
 
         timer = setTimeout(getAdsList, 2000);
         setResultOpacity(0.3);
-
+        setCurrentPage(1);
     }, [q, cat, estado]);
+
+    let pagination = [];
+    for (let i = 1; i <= pageCount; i++) {
+        pagination.push(i);
+    }
 
     return (
         <>
@@ -121,6 +150,12 @@ const Page = () => {
                             </select>
                             <div className='filterName'>Categorias:</div>
                             <ul>
+                                <li
+                                    className={cat === '' ? 'categoryItem active ' : 'categoryItem'}
+                                    onClick={() => setCat('')}>
+                                    <div className="img">ツ</div>
+                                    <span>Todas</span>
+                                </li>
                                 {categories.map((i, k) =>
                                     <li
                                         onClick={() => setCat(i.slug)}
@@ -134,13 +169,36 @@ const Page = () => {
                             </ul>
                         </form>
                     </div>
+                    
                     <div className='rightSide'>
                         <h2>Resultados</h2>
-                        <div className='list' style={{opacity:resultOpacity}}>
+
+                        {loading && adList.length === 0 &&
+                            <div className="listWarning">
+                                {warningMessage}
+                            </div>
+                        }
+                        {!loading && adList.length === 0 &&
+                            <div className="listWarning">
+                                Não encontramos resultados.
+                            </div>
+                        }
+
+                        <div className='list' style={{ opacity: resultOpacity }}>
                             {adList.map((i, k) =>
                                 <AdItem key={k} data={i} />
                             )}
                         </div>
+
+                        <div className='pagination'>
+                            {pagination.map((i, k) =>
+                                <div onClick={() => setCurrentPage(i)}
+                                    className={i === currentPage ? 'pageItem active' : 'pageItem'}>
+                                    {i}
+                                </div>
+                            )}
+                        </div>
+
                     </div>
                 </PageArea>
             </PageContainer>

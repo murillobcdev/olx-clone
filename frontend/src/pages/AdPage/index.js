@@ -48,7 +48,7 @@ const Page = () => {
                     /
                     <Link to={`/ads?state=${adInfo.stateName}`}>{adInfo.stateName}</Link>
                     /
-                    <Link to={`/ads?state=${adInfo.stateName}&cat=${adInfo.category.slug}` }>{adInfo.category.name}</Link>
+                    <Link to={`/ads?state=${adInfo.stateName}&cat=${adInfo.category.slug}`}>{adInfo.category.name}</Link>
                     /
                     {adInfo.title}
                 </BreadCrumb>
@@ -120,7 +120,7 @@ const Page = () => {
                         <h2>Outras ofertas do vendedor</h2>
                         <div className="list">
                             {adInfo.others.map((i, k) =>
-                                <AdItem key={k} data={i} />
+                                <AdItem key={k} data={i}/>
                             )}
                         </div>
                     </>

@@ -4,7 +4,7 @@ import useApi from '../../helpers/MBSApi';
 import React, { useState, useRef, useEffect } from 'react';
 import MaskedInput from 'react-text-mask';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const Page = () => {
 
@@ -19,6 +19,7 @@ const Page = () => {
     const [priceNegotiable, setPriceNegotiable] = useState(false);
     const [desc, setDesc] = useState('');
     const fileField = useRef();
+
 
     const [disabled, setDisabled] = useState(false);
     const [error, setError] = useState('');
@@ -55,7 +56,7 @@ const Page = () => {
 
             const json = await api.addAd(fData);
 
-            if(!json.error){
+            if (!json.error) {
                 history.push(`/ad/${json.id}`);
                 return;
             } else {
@@ -90,7 +91,7 @@ const Page = () => {
     return (
         <PageContainer>
             <PageTitle>
-                Postar um anúncio
+                Faça um anúncio
             </PageTitle>
             <PageArea>
 
@@ -150,7 +151,6 @@ const Page = () => {
                                 checked={priceNegotiable}
                                 onChange={e => setPriceNegotiable(!priceNegotiable)}
                             >
-
                             </input>
                         </div>
                     </label>
