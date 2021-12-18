@@ -1,7 +1,8 @@
 # olx-clone 
 
-meu primeiro projeto em react, estou adicionando bootstrap para mais responsividade
+Meu primeiro projeto em react, estou adicionando Bootstrap nas páginas para mais responsividade.
+Algumas funções que fiz neste site não funcionam pois o backend dele é fornecido pelo curso que eu estou fazendo, e esse backend não está permitindo no momento que essas funções sejam executadas como planejei, mas esta tudo estruturado.
 
-rode <strong>npm install</strong> no terminal em frontend para instalar as dependencias 
+Entre com <strong>npm install</strong> no terminal no diretório Frontend para instalar todas as dependências.
 
-depois <strong>npm start</strong>
+Logo após <strong>npm start</strong> para rodar o projeto.
