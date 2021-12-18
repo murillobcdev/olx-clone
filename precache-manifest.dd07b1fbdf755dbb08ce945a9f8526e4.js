@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "91a6072decbaa57f4e1fb3b0e75a93fa",
+    "revision": "55bbfe09c938c93fe51194b925a1ee8c",
     "url": "/mbstore/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/mbstore/static/css/2.0d4de01b.chunk.css"
   },
   {
-    "revision": "9fc8d068ef4f6621024d",
+    "revision": "86b7db8c99dbedf31c48",
     "url": "/mbstore/static/css/main.fc3dc48f.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/mbstore/static/js/2.011c4095.chunk.js"
   },
   {
-    "revision": "9fc8d068ef4f6621024d",
-    "url": "/mbstore/static/js/main.f8180c9f.chunk.js"
+    "revision": "86b7db8c99dbedf31c48",
+    "url": "/mbstore/static/js/main.e3ddec85.chunk.js"
   },
   {
     "revision": "cdfb8cdac018c9a6c0ea",
