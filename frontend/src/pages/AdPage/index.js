@@ -25,7 +25,7 @@ const Page = () => {
             setLoading(false);
         }
         getAdInfo(id);
-    }, []);
+    }, [id]);
 
     const formatDate = (date) => {
         let cDate = new Date(date);

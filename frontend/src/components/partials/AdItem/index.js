@@ -11,13 +11,14 @@ export default (props) => {
         price = `R$ ${props.data.price}`
     }
 
-    const handleClick = () => {
-        window.location.href = `/ad/${props.data.id}`;
-    }
+    // const handleClick = () => {
+    //     window.location.href = `/ad/${props.data.id}`;
+    // onClick={handleClick}
+    // }
 
     return (
         <Item className="aditem">
-            <Link to={`/ad/${props.data.id}`} onClick={handleClick}>
+            <Link to={`/ad/${props.data.id}`} >
                 <div className="item-image">
                     {
                         props.data.images &&
