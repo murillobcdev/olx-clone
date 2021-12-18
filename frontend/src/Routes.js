@@ -17,6 +17,9 @@ export default () => {
             <RouteHandler exact path="/">
                 <Home />
             </RouteHandler>
+            <RouteHandler exact path="/mbstore/">
+                <Home />
+            </RouteHandler>
             <RouteHandler exact path="/about">
                 <About />
             </RouteHandler>

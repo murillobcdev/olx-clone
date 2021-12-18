@@ -7,6 +7,7 @@ export default ({ children, ...rest }) => {
     let authorized = (rest.private && !logged) ? false : true;
     return (
         <Route
+            basename="/mbstore"
             {...rest}
             render={() => 
                 authorized ? children : <Redirect to="/signin"/>
