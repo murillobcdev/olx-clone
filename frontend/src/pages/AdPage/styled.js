@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-export const Fake = styled.div`
-  background-color:#DDD;
-  height:${props => props.height || 20}px;
-`;
-
 export const PageArea = styled.div`
 display:flex;
 margin-top:20px;
+
+.loading-spinner{
+  height:100%;
+  width:100%;
+}
 
 .-padding{
   padding:10px;

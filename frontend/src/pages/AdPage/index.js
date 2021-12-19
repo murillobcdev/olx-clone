@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { PageArea, Fake, OthersArea, BreadCrumb } from './styled';
+import { PageArea, OthersArea, BreadCrumb } from './styled';
 import { PageContainer } from '../../components/MainComponents';
 import { useParams } from 'react-router-dom';
 import useApi from '../../helpers/MBSApi';
 import { Slide } from "react-slideshow-image";
 import AdItem from '../../components/partials/AdItem';
 import "react-slideshow-image/dist/styles.css";
+import Spinner from 'react-bootstrap/Spinner'
 import { Link } from 'react-router-dom';
 
 const Page = () => {
@@ -57,7 +58,11 @@ const Page = () => {
                 <div className="leftSide">
                     <div className="box">
                         <div className="adImage">
-                            {loading && <Fake height={300} />}
+                            {loading &&
+                                <div className="loading-spinner d-flex justify-content-center align-items-center">
+                                    <Spinner animation="border" variant="dark" />
+                                </div>
+                            }
                             {adInfo.images &&
                                 <Slide>
                                     {adInfo.images.map((img, k) =>
@@ -70,7 +75,11 @@ const Page = () => {
                         </div>
                         <div className="infoAd">
                             <div className="adName">
-                                {loading && <Fake height={20} />}
+                                {loading &&
+                                    <div className="loading-spinner d-flex justify-content-center align-items-center">
+                                        <Spinner animation="border" variant="dark" />
+                                    </div>
+                                }
                                 {adInfo.title &&
                                     <h2>{adInfo.title}</h2>
                                 }
@@ -79,7 +88,11 @@ const Page = () => {
                                 }
                             </div>
                             <div className="adDesc">
-                                {loading && <Fake height={100} />}
+                                {loading &&
+                                    <div className="loading-spinner d-flex justify-content-center align-items-center">
+                                        <Spinner animation="border" variant="dark" />
+                                    </div>
+                                }
                                 {adInfo.description}
                                 <hr />
                                 {adInfo.views &&
@@ -91,7 +104,11 @@ const Page = () => {
                 </div>
                 <div className="rightSide">
                     <div className="box -padding">
-                        {loading && <Fake height={20} />}
+                        {loading &&
+                            <div className="loading-spinner d-flex justify-content-center align-items-center">
+                                <Spinner animation="border" variant="dark" />
+                            </div>
+                        }
                         {adInfo.priceNegotiable &&
                             "Preço negociável"
                         }
@@ -101,7 +118,11 @@ const Page = () => {
                             </div>
                         }
                     </div>
-                    {loading && <Fake height={50} />}
+                    {loading &&
+                        <div className="loading-spinner d-flex justify-content-center align-items-center">
+                            <Spinner animation="border" variant="dark" />
+                        </div>
+                    }
                     {adInfo.userInfo &&
                         <>
                             <a href={`mailto:${adInfo.userInfo.email}`} target="_blank" rel="noopener noreferrer" className="contactSeller" >Fale com o vendedor</a>
@@ -120,7 +141,7 @@ const Page = () => {
                         <h2>Outras ofertas do vendedor</h2>
                         <div className="list">
                             {adInfo.others.map((i, k) =>
-                                <AdItem key={k} data={i}/>
+                                <AdItem key={k} data={i} />
                             )}
                         </div>
                     </>

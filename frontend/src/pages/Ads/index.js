@@ -28,8 +28,8 @@ const Page = () => {
         query.get('cat') != null ? query.get('cat') : ''
     );
 
-    const [estado, setEstado] = useState(
-        query.get('estado') != null ? query.get('estado') : ''
+    const [state, setState] = useState(
+        query.get('state') != null ? query.get('state') : ''
     );
 
     const [stateList, setStateList] = useState([]);
@@ -50,7 +50,7 @@ const Page = () => {
         const json = await api.getAds({
             sort: 'desc',
             limit: 9,
-            q, cat, estado,
+            q, cat, state,
             offset
         });
         
@@ -73,7 +73,6 @@ const Page = () => {
         } else {
             setPageCount(0);
         }
-
     }, [adsTotal]);
 
     useEffect(() => {
@@ -100,8 +99,8 @@ const Page = () => {
         if (cat) {
             queryString.push(`cat=${cat}`);
         }
-        if (estado) {
-            queryString.push(`state=${estado}`);
+        if (state) {
+            queryString.push(`state=${state}`);
         }
 
         history.replace({
@@ -115,7 +114,7 @@ const Page = () => {
         timer = setTimeout(getAdsList, 2000);
         setResultOpacity(0.3);
         setCurrentPage(1);
-    }, [q, cat, estado]);
+    }, [q, cat, state]);
 
     let pagination = [];
     for (let i = 1; i <= pageCount; i++) {
@@ -139,8 +138,8 @@ const Page = () => {
                             <div className='filterName'>Estado:</div>
                             <select
                                 name='state'
-                                value={estado}
-                                onChange={e => setEstado(e.target.value)}
+                                value={state}
+                                onChange={e => setState(e.target.value)}
                             >
                                 <option></option>
                                 {stateList.map((i, k) =>
@@ -192,8 +191,11 @@ const Page = () => {
 
                         <div className='pagination'>
                             {pagination.map((i, k) =>
-                                <div onClick={() => setCurrentPage(i)}
-                                    className={i === currentPage ? 'pageItem active' : 'pageItem'}>
+                                <div 
+                                onClick={() => setCurrentPage(i)}
+                                className={i === currentPage ? 'pageItem active' : 'pageItem'}
+                                key={k}
+                                >
                                     {i}
                                 </div>
                             )}
