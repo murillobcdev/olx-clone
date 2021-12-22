@@ -4,6 +4,7 @@ export const Template = styled.div``;
 
 export const PageContainer = styled.div`
     max-width:1000px;
+    height:100vh;
     margin:auto;
     `;
 
@@ -13,7 +14,9 @@ export const PageTitle = styled.h1`
     color:#670696;
 `;
 
-export const PageBody = styled.div``;
+// export const PageBody = styled.div`
+
+// `;
 
 export const ErrorMessage = styled.div`  
 

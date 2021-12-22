@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { PageArea } from './styled';
-import { PageContainer } from '../../components/MainComponents';
 import useApi from '../../helpers/MBSApi';
 import { useLocation, useHistory } from 'react-router-dom';
 import AdItem from '../../components/partials/AdItem';
-
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import Form from 'react-bootstrap/Form';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Pagination from 'react-bootstrap/Pagination'
 
 let timer;
 
@@ -12,7 +17,6 @@ const Page = () => {
 
     const api = useApi();
     const history = useHistory();
-
 
     const useQueryString = () => {
         return new URLSearchParams(useLocation().search);
@@ -42,6 +46,10 @@ const Page = () => {
     const [warningMessage, setWarningMessage] = useState('Carregando..');
     const [loading, setLoading] = useState(true);
 
+    //offcanvas controlador
+    const [show, setShow] = useState(false);
+
+
     const getAdsList = async () => {
         setLoading(true);
 
@@ -53,7 +61,7 @@ const Page = () => {
             q, cat, state,
             offset
         });
-        
+
         setAdList(json.ads);
         setAdsTotal(json.total);
         setResultOpacity(1);
@@ -121,89 +129,152 @@ const Page = () => {
         pagination.push(i);
     }
 
+    function handleShow() {
+        setShow(true);
+    }
+
+    function handleClose() {
+        setShow(false);
+    }
+
+    function handlePaginationNext() {
+        if (currentPage === pagination.length) {
+            setCurrentPage(currentPage)
+        } else {
+            let page = currentPage;
+            page++;
+            setCurrentPage(page);
+        }
+    }
+
+    function handlePaginationPrev() {
+        if (currentPage === 1) {
+            setCurrentPage(currentPage)
+        } else {
+            let page = currentPage;
+            page--;
+            setCurrentPage(page);
+        }
+    }
+
     return (
         <>
-            <PageContainer>
+            <Container>
                 <PageArea>
-                    <div className='leftSide'>
-                        <form method='GET'>
-                            <input
-                                type='text'
-                                name='q'
-                                placeholder='O que você procura?'
-                                value={q}
-                                onChange={e => setQ(e.target.value)}
-                            />
-
-                            <div className='filterName'>Estado:</div>
-                            <select
-                                name='state'
-                                value={state}
-                                onChange={e => setState(e.target.value)}
+                    <button onClick={handleShow} className='btn btn-lg btn-outline-warning ativo my-3'>
+                        Filtros
+                    </button>
+                    <Offcanvas scroll={true} show={show} onHide={handleClose} style={{ width: 245 }} >
+                        <Offcanvas.Header closeButton></Offcanvas.Header>
+                        <Offcanvas.Body>
+                            <Form
+                                method='GET'
                             >
-                                <option></option>
-                                {stateList.map((i, k) =>
-                                    <option key={k} value={i.name}>{i.name}</option>
-                                )}
+                                <Form.Group>
+                                    <Form.Label>
+                                        O que você procura?
+                                        <Form.Control
+                                            type='text'
+                                            name='q'
+                                            value={q}
+                                            onChange={e => setQ(e.target.value)}
+                                        />
+                                    </Form.Label>
+                                </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>
+                                        Estado
+                                        <Form.Select
+                                            name='state'
+                                            value={state}
+                                            onChange={e => setState(e.target.value)}
+                                        >
+                                            {stateList.map((i, k) =>
+                                                <option key={k} value={i.name}>{i.name}</option>
+                                            )}
+                                        </Form.Select>
+                                    </Form.Label>
+                                </Form.Group>
+                                <Form.Group>
+                                    <ListGroup as='ul'>
+                                        <ListGroup.Item
+                                            as='li'
+                                            className={cat === '' ? 'd-flex justify-content-between align-items-start active ' : 'd-flex justify-content-between align-items-start'}
+                                            action
+                                            onClick={() => setCat('')}
+                                        >
+                                            <div className="niceIcon">ツ</div>
+                                            <span>Todas</span>
+                                        </ListGroup.Item>
+                                        {categories.map((i, k) =>
+                                            <ListGroup.Item
+                                                as='li'
+                                                onClick={() => setCat(i.slug)}
+                                                key={k}
+                                                className={cat === i.slug ? 'd-flex justify-content-between align-items-start active ' : 'd-flex justify-content-between align-items-start'}
+                                                action
+                                            >
+                                                <img src={i.img} alt=""></img>
+                                                <span>{i.name}</span>
+                                            </ListGroup.Item>
+                                        )}
+                                    </ListGroup>
+                                </Form.Group>
+                            </Form>
+                        </Offcanvas.Body>
+                    </Offcanvas>
+                    <Container className="results">
 
-                            </select>
-                            <div className='filterName'>Categorias:</div>
-                            <ul>
-                                <li
-                                    className={cat === '' ? 'categoryItem active ' : 'categoryItem'}
-                                    onClick={() => setCat('')}>
-                                    <div className="img">ツ</div>
-                                    <span>Todas</span>
-                                </li>
-                                {categories.map((i, k) =>
-                                    <li
-                                        onClick={() => setCat(i.slug)}
+                        <p className="h4 my-3 text-center">Resultados</p>
+
+                        <Pagination className="d-flex justify-content-center my-3">
+
+                            <Pagination.First onClick={() => setCurrentPage(1)} />
+                            <Pagination.Prev onClick={handlePaginationPrev} />
+
+                            {
+                                pagination.slice(0, 3).map((i, k) =>
+                                    <Pagination.Item
+                                        onClick={() => setCurrentPage(i)}
                                         key={k}
-                                        className={cat === i.slug ? 'categoryItem active ' : 'categoryItem'}
+                                        className={i === currentPage ? 'active' : ''}
                                     >
-                                        <img src={i.img} alt=""></img>
-                                        <span>{i.name}</span>
-                                    </li>
+                                        {i}
+
+                                    </Pagination.Item>
                                 )}
-                            </ul>
-                        </form>
-                    </div>
-                    
-                    <div className='rightSide'>
-                        <h2>Resultados</h2>
+                            <Pagination.Ellipsis />
+                            {
+                                currentPage > 3 &&
+                                <Pagination.Item active>{currentPage}</Pagination.Item>
+                            }
+                            <Pagination.Next onClick={handlePaginationNext} />
+                            <Pagination.Last onClick={() => setCurrentPage(pagination.length)} />
+                        </Pagination>
 
                         {loading && adList.length === 0 &&
                             <div className="listWarning">
                                 {warningMessage}
                             </div>
                         }
+
                         {!loading && adList.length === 0 &&
                             <div className="listWarning">
                                 Não encontramos resultados.
                             </div>
                         }
 
-                        <div className='list' style={{ opacity: resultOpacity }}>
+                        <Row className='list' style={{ opacity: resultOpacity }}>
                             {adList.map((i, k) =>
-                                <AdItem key={k} data={i} />
+                                <Col key={k} md={2} className="py-1 px-1">
+                                    <AdItem data={i} />
+                                </Col>
                             )}
-                        </div>
-
-                        <div className='pagination'>
-                            {pagination.map((i, k) =>
-                                <div 
-                                onClick={() => setCurrentPage(i)}
-                                className={i === currentPage ? 'pageItem active' : 'pageItem'}
-                                key={k}
-                                >
-                                    {i}
-                                </div>
-                            )}
-                        </div>
-
-                    </div>
+                        </Row>
+                        
+                    </Container>
                 </PageArea>
-            </PageContainer>
+            </Container>
         </>
     );
 }

@@ -1,8 +1,9 @@
 import React from 'react';
-import { Item } from './styled';
 import { Link } from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
 
 export default (props) => {
+
     let price = '';
 
     if (props.data.priceNegotiable) {
@@ -11,37 +12,29 @@ export default (props) => {
         price = `R$ ${props.data.price}`
     }
 
-    // const handleClick = () => {
-    //     window.location.href = `/ad/${props.data.id}`;
-    // onClick={handleClick}
-    // }
-
     return (
-        <Item className="aditem">
-            <Link to={`/ad/${props.data.id}`} >
-                <div className="item-image">
-                    {
-                        props.data.images &&
-
-                        props.data.images
-                            .slice(0, 2)
-                            .filter(e => e !== undefined)
-                            .map((image, index) =>
-                                <>
-                                    <img key={index} src={`http://alunos.b7web.com.br:501/media/${image.url}`} alt="" />
-                                    {console.log(image)}
-                                </>
-                            )
+        <Card className="aditem">
+            <Link to={`/ad/${props.data.id}`}>
+                {
+                    props.data.images &&
+                    props.data.images
+                        .slice(0, 2)
+                        .filter(e => e !== undefined)
+                        .map((image, index) =>
+                            <>
+                                <Card.Img key={index} src={`http://alunos.b7web.com.br:501/media/${image.url}`} alt="" />
+                            </>
+                        )
+                }
+                <Card.Img src={props.data.image} className="my-2" />
+                <Card.Title>
+                    {props.data.title.length > 20
+                        ? `${props.data.title.substring(0, 10)} ...leia mais`
+                        : props.data.title
                     }
-                    <img src={props.data.image} alt="" />
-                </div>
-                <div className="item-name">
-                    {props.data.title}
-                </div>
-                <div className="item-price">
-                    {price}
-                </div>
+                </Card.Title>
+                <Card.Text>{price}</Card.Text>
             </Link>
-        </Item>
+        </Card>
     );
 }
