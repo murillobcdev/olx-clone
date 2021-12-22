@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const PageArea = styled.div`
 
+height:100%;
 display:flex;
 justify-content:center;
 
@@ -45,19 +46,25 @@ justify-content:center;
     padding-right:15px;
 }
 
-.showAds{
+.aditem{
     width:100%;
+    text-align:center;
+    a{
+        text-decoration:none;
+        color:#000;
+        text-wrap
+    }
 
-    .userAds{
-        flex-wrap:wrap;
-        display:flex;
-    
-        .aditem{
-            width:33%;
-            text-align:center;
+    &:hover{
+        background-color:#8c36b5;
+
+        a, p{
+            color:#FFF;
         }
     }
 }
+
+
 
 
 

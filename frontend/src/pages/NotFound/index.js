@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { PageContainer } from '../../components/MainComponents';
 
 const Page = () => {
     return (
-        <div>
+        <PageContainer>
             <h1>Página não encontrada!</h1>
 
             <Link to="/">Voltar para a Página Inicial.</Link>
-        </div>
+        </PageContainer>
     );
 }
 

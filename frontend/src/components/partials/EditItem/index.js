@@ -1,5 +1,6 @@
 import { Item } from './styled';
 import { Link } from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
 import useApi from '../../../helpers/MBSApi';
 import Modal from "react-bootstrap/Modal";
 import React, { useState, useRef, useEffect } from 'react';
@@ -108,35 +109,33 @@ export default (props) => {
     }
 
     return (
-        <Item className="aditem">
-            <Link to={`/ ad / ${props.data.id} `} onClick={handleClick}>
-                <div className="p-2 m-2">
-                    <div className="item-image">
-
-                        {
-                            props.data.images &&
-
-                            props.data.images
-                                .slice(0, 2)
-                                .filter(value => Object.keys(value).length !== 0)
-                                .map((image, index) =>
-                                    <img key={index} src={`http://alunos.b7web.com.br:501/media/${image.url}`} alt="" />
-                                )
+        <Card className="aditem">
+            <Link to={`/ad/${props.data.id}`} onClick={handleClick}>
+                {
+                    props.data.images &&
+                    props.data.images
+                        .slice(0, 2)
+                        .filter(e => e !== undefined)
+                        .map((image, index) =>
+                            <>
+                                <Card.Img key={index} src={`http://alunos.b7web.com.br:501/media/${image.url}`} alt="" />
+                            </>
+                        )
+                }
+                <Card.Img src={props.data.image} className="my-2" />
+                <Card.Body>
+                    <Card.Title>
+                        {props.data.title.length > 20
+                            ? `${props.data.title.substring(0, 10)} ...leia mais`
+                            : props.data.title
                         }
-
-                        <img src={props.data.image} alt="" />
-
-                    </div >
-                    <div className="item-name">
-                        {props.data.title}
-                    </div>
-                    <div className="item-price">
-                        {price}
-                    </div>
-                </div >
-
+                    </Card.Title>
+                    <Card.Text>{price}</Card.Text>
+                </Card.Body>
             </Link >
-            <button onClick={() => showModal(props.data.id)} type="button" className="btn btn-primary">Editar</button>
+            <div className="align-self-center my-2 container-fluid">
+                <button onClick={() => showModal(props.data.id)} type="button" className="btn btn-primary">Editar</button>
+            </div>
             <Modal show={isOpen} onHide={hideModal}>
                 <Modal.Header>
                     Edite seu anúncio
@@ -234,6 +233,6 @@ export default (props) => {
                     </Modal.Footer>
                 </form>
             </Modal>
-        </Item >
+        </Card >
     );
 }

@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 
-export const Template = styled.div``;
+export const Template = styled.div`
+
+`;
 
 export const PageContainer = styled.div`
-    max-width:1000px;
+    max-width:1140px;
     height:100vh;
     margin:auto;
     `;
@@ -13,10 +15,6 @@ export const PageTitle = styled.h1`
     font-size:25px;
     color:#670696;
 `;
-
-// export const PageBody = styled.div`
-
-// `;
 
 export const ErrorMessage = styled.div`  
 

@@ -12,28 +12,43 @@ export default (props) => {
         price = `R$ ${props.data.price}`
     }
 
+    const getImage = (i) => {
+        let newDefaultImage = 'https://pngimage.net/wp-content/uploads/2018/05/default-png-3.png';
+        let defaultImg = 'http://alunos.b7web.com.br:501/media/default.jpg';
+        if (i == defaultImg) {
+            return (
+                <Card.Img
+                    src={newDefaultImage}
+                    className="my-2"
+                />
+            );
+        } else {
+            return (
+                <Card.Img
+                    src={i}
+                    className="my-2"
+                />
+            )
+        }
+    }
+
     return (
         <Card className="aditem">
             <Link to={`/ad/${props.data.id}`}>
                 {
-                    props.data.images &&
-                    props.data.images
-                        .slice(0, 2)
-                        .filter(e => e !== undefined)
-                        .map((image, index) =>
-                            <>
-                                <Card.Img key={index} src={`http://alunos.b7web.com.br:501/media/${image.url}`} alt="" />
-                            </>
-                        )
+                    getImage(props.data.image)
                 }
-                <Card.Img src={props.data.image} className="my-2" />
-                <Card.Title>
-                    {props.data.title.length > 20
-                        ? `${props.data.title.substring(0, 10)} ...leia mais`
-                        : props.data.title
-                    }
-                </Card.Title>
-                <Card.Text>{price}</Card.Text>
+                <Card.Body>
+                    <Card.Title>
+                        {props.data.title.length > 20
+                            ? `${props.data.title.substring(0, 10)} ...leia mais`
+                            : props.data.title
+                        }
+                    </Card.Title>
+                    <Card.Text>
+                        {price}
+                    </Card.Text>
+                </Card.Body>
             </Link>
         </Card>
     );

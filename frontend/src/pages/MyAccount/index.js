@@ -4,6 +4,9 @@ import { PageContainer } from '../../components/MainComponents';
 import useApi from '../../helpers/MBSApi';
 import EditItem from '../../components/partials/EditItem';
 import Modal from "react-bootstrap/Modal";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 
 
 const Page = () => {
@@ -25,7 +28,6 @@ const Page = () => {
     const [disabled, setDisabled] = useState(false);
     const [error, setError] = useState('');
 
-
     useEffect(() => {
         const getUser = async () => {
             const json = await api.getUser();
@@ -46,11 +48,9 @@ const Page = () => {
     const showModal = () => {
         setIsOpen(true)
     }
-
     const hideModal = () => {
         setIsOpen(false)
     }
-
     const handleAttInfo = async (e) => {
 
         e.preventDefault();
@@ -71,7 +71,7 @@ const Page = () => {
 
     return (
         <>
-            <PageContainer>
+            <Container>
                 <PageArea>
                     <div className="userInfo">
                         <h2 className='title'>Olá, {info.name}</h2>
@@ -194,19 +194,19 @@ const Page = () => {
                         </form>
                     </Modal>
                 </PageArea>
+            </Container>
+            <Container>
+                <p className="h3">Meus anúncios</p>
                 <PageArea>
-                    <div className='showAds'>
-                        <h1>Meus anúncios</h1>
-                        <div className='userAds'>
-                            {adList.map((i, k) => (
-                                < >
-                                    <EditItem key={k} data={i} />
-                                </>
-                            ))}
-                        </div>
-                    </div>
+                    <Row className="g-4">
+                        {adList.map((i, k) =>
+                            <Col key={k} md={2} className="py-1 px-1">
+                                <EditItem data={i} />
+                            </Col>
+                        )}
+                    </Row>
                 </PageArea>
-            </PageContainer>
+            </Container>
         </>
     );
 }

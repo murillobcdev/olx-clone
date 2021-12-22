@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PageArea } from './styled';
+import { PageContainer } from '../../components/MainComponents';
 import useApi from '../../helpers/MBSApi';
 import { useLocation, useHistory } from 'react-router-dom';
 import AdItem from '../../components/partials/AdItem';
@@ -264,15 +265,22 @@ const Page = () => {
                             </div>
                         }
 
-                        <Row className='list' style={{ opacity: resultOpacity }}>
+                        <Row className="g-4" style={{ opacity: resultOpacity }}>
                             {adList.map((i, k) =>
                                 <Col key={k} md={2} className="py-1 px-1">
                                     <AdItem data={i} />
                                 </Col>
                             )}
                         </Row>
-                        
+
                     </Container>
+                </PageArea>
+            </Container>
+            <Container>
+                <PageArea className="text-center my-3">
+                    <hr />
+                    Pequeno site para comércio local semelhante a OLX. Fiz com <strong>React+Bootstrap</strong> e é meu primeiro projeto grande.
+                    <hr />
                 </PageArea>
             </Container>
         </>
