@@ -13,7 +13,9 @@ export default (props) => {
     }
 
     const getImage = (i) => {
+        
         let newDefaultImage = 'https://pngimage.net/wp-content/uploads/2018/05/default-png-3.png';
+
         let defaultImg = 'http://alunos.b7web.com.br:501/media/default.jpg';
         if (i == defaultImg) {
             return (
